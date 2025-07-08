@@ -21,6 +21,7 @@ import { generateAction } from "@/app/listing-generator/actions";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   propertyType: z.string().min(2, { message: "Property type must be at least 2 characters." }),
@@ -39,6 +40,7 @@ type GenerationResult = {
 };
 
 export default function ListingGeneratorForm() {
+  const t = useTranslations('ListingGeneratorPage');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<GenerationResult | null>(null);
   const { toast } = useToast();
@@ -65,13 +67,13 @@ export default function ListingGeneratorForm() {
     if (response.success && response.data) {
       setResult(response.data);
       toast({
-        title: "Success!",
-        description: "Your listing descriptions have been generated.",
+        title: t('successToastTitle'),
+        description: t('successToastDescription'),
         variant: "default",
       });
     } else {
       toast({
-        title: "Error",
+        title: t('errorToastTitle'),
         description: response.error || "An unknown error occurred.",
         variant: "destructive",
       });
@@ -81,7 +83,7 @@ export default function ListingGeneratorForm() {
   return (
     <Card className="w-full max-w-4xl mx-auto shadow-xl">
       <CardHeader>
-        <CardTitle className="text-2xl">Property Details</CardTitle>
+        <CardTitle className="text-2xl">{t('formTitle')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -92,8 +94,8 @@ export default function ListingGeneratorForm() {
                 name="propertyType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Property Type</FormLabel>
-                    <FormControl><Input placeholder="e.g., House, Condo" {...field} /></FormControl>
+                    <FormLabel>{t('propertyTypeLabel')}</FormLabel>
+                    <FormControl><Input placeholder={t('propertyTypePlaceholder')} {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -103,8 +105,8 @@ export default function ListingGeneratorForm() {
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Location</FormLabel>
-                    <FormControl><Input placeholder="e.g., Beverly Hills, CA" {...field} /></FormControl>
+                    <FormLabel>{t('locationLabel')}</FormLabel>
+                    <FormControl><Input placeholder={t('locationPlaceholder')} {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -114,7 +116,7 @@ export default function ListingGeneratorForm() {
                 name="bedrooms"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bedrooms</FormLabel>
+                    <FormLabel>{t('bedroomsLabel')}</FormLabel>
                     <FormControl><Input type="number" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
@@ -125,7 +127,7 @@ export default function ListingGeneratorForm() {
                 name="bathrooms"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bathrooms</FormLabel>
+                    <FormLabel>{t('bathroomsLabel')}</FormLabel>
                     <FormControl><Input type="number" step="0.5" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
@@ -136,7 +138,7 @@ export default function ListingGeneratorForm() {
                 name="squareFootage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Square Footage</FormLabel>
+                    <FormLabel>{t('squareFootageLabel')}</FormLabel>
                     <FormControl><Input type="number" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
@@ -147,9 +149,9 @@ export default function ListingGeneratorForm() {
                 name="amenities"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Amenities</FormLabel>
-                    <FormControl><Input placeholder="e.g., Pool, Gym, Parking" {...field} /></FormControl>
-                    <FormDescription>Comma-separated list.</FormDescription>
+                    <FormLabel>{t('amenitiesLabel')}</FormLabel>
+                    <FormControl><Input placeholder={t('amenitiesPlaceholder')} {...field} /></FormControl>
+                    <FormDescription>{t('amenitiesDescription')}</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -160,9 +162,9 @@ export default function ListingGeneratorForm() {
                 name="uniqueFeatures"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Unique Features</FormLabel>
+                    <FormLabel>{t('uniqueFeaturesLabel')}</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Describe what makes this property special..." {...field} />
+                      <Textarea placeholder={t('uniqueFeaturesPlaceholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -172,12 +174,12 @@ export default function ListingGeneratorForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
+                  {t('generatingButton')}
                 </>
               ) : (
                 <>
                   <Sparkles className="mr-2 h-4 w-4" />
-                  Generate Descriptions
+                  {t('generateButton')}
                 </>
               )}
             </Button>
@@ -192,11 +194,11 @@ export default function ListingGeneratorForm() {
             exit={{ opacity: 0, y: -20 }}
           >
             <div className="space-y-2">
-              <h3 className="text-xl font-bold font-headline text-primary">English Description</h3>
+              <h3 className="text-xl font-bold font-headline text-primary">{t('englishDescription')}</h3>
               <Textarea readOnly value={result.englishDescription} className="h-40 bg-secondary" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl font-bold font-headline text-primary">Spanish Description</h3>
+              <h3 className="text-xl font-bold font-headline text-primary">{t('spanishDescription')}</h3>
               <Textarea readOnly value={result.spanishDescription} className="h-40 bg-secondary" />
             </div>
           </motion.div>
