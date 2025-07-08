@@ -1,12 +1,12 @@
 import GalleryClientPage from "@/components/gallery-client-page";
-import { getTranslator } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 type Props = {
   params: {locale: string};
 };
 
 export async function generateMetadata({params: {locale}}: Props) {
-  const t = await getTranslator(locale, 'GalleryPage');
+  const t = await getTranslations('GalleryPage');
  
   return {
     title: `${t('title')} | Alfarid Estates`,
