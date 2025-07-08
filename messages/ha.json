@@ -78,7 +78,7 @@
   },
   "ListingGeneratorPage": {
     "title": "Janareta na Bayanin Jerin da AI ke Ƙarfafawa",
-    "subtitle": "Ƙirƙiri cikakken bayanin kadara a cikin 'yan sakanni. Kayan aikinmu na AI, wanda ƙwararrun marubuta suka horar, yana haifar da jerin abubuwa masu jan hankali da ƙwararru a cikin Turanci da Sifen don jawo hankalin masu siye.",
+    "subtitle": "Ƙirƙiri cikakken bayanin kadara a cikin 'yan sakanni. Kayan aikinmu na AI, wanda ƙwararrun marubuta suka horar, yana haifar da jerin abubuwa masu jan hankali da ƙwararru a cikin Turanci da Hausa don jawo hankalin masu siye.",
     "formTitle": "Bayanin Kadara",
     "propertyTypeLabel": "Nau'in Kadara",
     "propertyTypePlaceholder": "misali, Gida, Kwando",
@@ -98,7 +98,7 @@
     "successToastDescription": "An haifar da bayanan jerin ku.",
     "errorToastTitle": "Kuskure",
     "englishDescription": "Bayanin Turanci",
-    "spanishDescription": "Bayanin Sifen"
+    "hausaDescription": "Bayanin Hausa"
   },
   "LanguageSwitcher": {
     "label": "Canja yare",

@@ -16,7 +16,7 @@
     "heroSubtitle": "Alfarid Estates：以无与伦比的服务和专业知识，为您开启通往未来的大门。",
     "exploreProperties": "探索房产",
     "aboutTitle": "关于 Alfarid Estates",
-    "aboutText1": "在Alfarid Estates，我们不仅仅是房地产经纪人；我们是卓越生活体验的策划者。凭借信任的传统和对卓越的承诺，我们专注于为有眼光的客户与世界上最独特的房产牵线搭桥。",
+    "aboutText1": "在AlfaridEstates，我们不仅仅是房地产经纪人；我们是卓越生活体验的策划者。凭借信任的传统和对卓越的承诺，我们专注于为有眼光的客户与世界上最独特的房产牵线搭桥。",
     "aboutText2": "我们的定制方法确保每笔交易都无缝、个性化并超出预期。我们相信，家是一个避难所，一种宣言，一份遗产。让我们引导您踏上寻找完美家园的旅程。",
     "servicesTitle": "我们的服务",
     "servicesSubtitle": "我们提供全面的服务，满足您所有的房地产需求，从买卖到物业管理和咨询。",
@@ -78,7 +78,7 @@
   },
   "ListingGeneratorPage": {
     "title": "AI驱动的房源描述生成器",
-    "subtitle": "在几秒钟内制作完美的房产描述。我们的AI工具由专业文案撰写人培训，可以生成引人入胜的专业英语和西班牙语房源，以吸引更多买家。",
+    "subtitle": "在几秒钟内制作完美的房产描述。我们的AI工具由专业文案撰写人培训，可以生成引人入胜的专业英语和豪萨语房源，以吸引更多买家。",
     "formTitle": "房产详情",
     "propertyTypeLabel": "房产类型",
     "propertyTypePlaceholder": "例如：房屋、公寓",
@@ -98,7 +98,7 @@
     "successToastDescription": "您的房源描述已生成。",
     "errorToastTitle": "错误",
     "englishDescription": "英文描述",
-    "spanishDescription": "西班牙文描述"
+    "hausaDescription": "豪萨语描述"
   },
   "LanguageSwitcher": {
     "label": "更改语言",

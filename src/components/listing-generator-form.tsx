@@ -36,7 +36,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 type GenerationResult = {
   englishDescription: string;
-  spanishDescription: string;
+  hausaDescription: string;
 };
 
 export default function ListingGeneratorForm() {
@@ -198,8 +198,8 @@ export default function ListingGeneratorForm() {
               <Textarea readOnly value={result.englishDescription} className="h-40 bg-secondary" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl font-bold font-headline text-primary">{t('spanishDescription')}</h3>
-              <Textarea readOnly value={result.spanishDescription} className="h-40 bg-secondary" />
+              <h3 className="text-xl font-bold font-headline text-primary">{t('hausaDescription')}</h3>
+              <Textarea readOnly value={result.hausaDescription} className="h-40 bg-secondary" />
             </div>
           </motion.div>
         )}

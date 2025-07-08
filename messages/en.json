@@ -78,7 +78,7 @@
   },
   "ListingGeneratorPage": {
     "title": "AI-Powered Listing Description Generator",
-    "subtitle": "Craft the perfect property description in seconds. Our AI tool, trained by expert copywriters, generates compelling and professional listings in both English and Spanish to attract more buyers.",
+    "subtitle": "Craft the perfect property description in seconds. Our AI tool, trained by expert copywriters, generates compelling and professional listings in both English and Hausa to attract more buyers.",
     "formTitle": "Property Details",
     "propertyTypeLabel": "Property Type",
     "propertyTypePlaceholder": "e.g., House, Condo",
@@ -98,7 +98,7 @@
     "successToastDescription": "Your listing descriptions have been generated.",
     "errorToastTitle": "Error",
     "englishDescription": "English Description",
-    "spanishDescription": "Spanish Description"
+    "hausaDescription": "Hausa Description"
   },
   "LanguageSwitcher": {
     "label": "Change language",

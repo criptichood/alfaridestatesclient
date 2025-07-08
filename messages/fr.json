@@ -78,7 +78,7 @@
   },
   "ListingGeneratorPage": {
     "title": "Générateur de description d'annonce alimenté par l'IA",
-    "subtitle": "Créez la description de propriété parfaite en quelques secondes. Notre outil d'IA, formé par des rédacteurs experts, génère des annonces convaincantes et professionnelles en anglais et en espagnol pour attirer plus d'acheteurs.",
+    "subtitle": "Créez la description de propriété parfaite en quelques secondes. Notre outil d'IA, formé par des rédacteurs experts, génère des annonces convaincantes et professionnelles en anglais et en haoussa pour attirer plus d'acheteurs.",
     "formTitle": "Détails de la propriété",
     "propertyTypeLabel": "Type de propriété",
     "propertyTypePlaceholder": "ex: Maison, Condo",
@@ -98,7 +98,7 @@
     "successToastDescription": "Vos descriptions d'annonces ont été générées.",
     "errorToastTitle": "Erreur",
     "englishDescription": "Description en anglais",
-    "spanishDescription": "Description en espagnol"
+    "hausaDescription": "Description en haoussa"
   },
   "LanguageSwitcher": {
     "label": "Changer de langue",

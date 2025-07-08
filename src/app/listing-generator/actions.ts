@@ -8,7 +8,7 @@ import {
 export async function generateAction(input: GenerateListingDescriptionInput) {
   try {
     const result = await generateListingDescription(input);
-    if (!result || !result.englishDescription || !result.spanishDescription) {
+    if (!result || !result.englishDescription || !result.hausaDescription) {
       throw new Error('AI failed to return a valid description.');
     }
     return { success: true, data: result };

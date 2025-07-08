@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview An AI agent for generating real estate listing descriptions in English and Spanish.
+ * @fileOverview An AI agent for generating real estate listing descriptions in English and Hausa.
  *
  * - generateListingDescription - A function that generates listing descriptions.
  * - GenerateListingDescriptionInput - The input type for the generateListingDescription function.
@@ -25,7 +25,7 @@ export type GenerateListingDescriptionInput = z.infer<typeof GenerateListingDesc
 
 const GenerateListingDescriptionOutputSchema = z.object({
   englishDescription: z.string().describe('The generated property description in English.'),
-  spanishDescription: z.string().describe('The generated property description in Spanish.'),
+  hausaDescription: z.string().describe('The generated property description in Hausa.'),
 });
 export type GenerateListingDescriptionOutput = z.infer<typeof GenerateListingDescriptionOutputSchema>;
 
@@ -39,7 +39,7 @@ const prompt = ai.definePrompt({
   name: 'generateListingDescriptionPrompt',
   input: {schema: GenerateListingDescriptionInputSchema},
   output: {schema: GenerateListingDescriptionOutputSchema},
-  prompt: `You are an expert real estate copywriter. Generate compelling and concise descriptions of properties in both English and Spanish, highlighting key features and amenities.
+  prompt: `You are an expert real estate copywriter. Generate compelling and concise descriptions of properties in both English and Hausa, highlighting key features and amenities.
 
 Property Type: {{{propertyType}}}
 Location: {{{location}}}
@@ -50,7 +50,7 @@ Amenities: {{{amenities}}}
 Unique Features: {{{uniqueFeatures}}}
 
 English Description:
-Spanish Description:`, // Ensure output is valid JSON
+Hausa Description:`, // Ensure output is valid JSON
 });
 
 const generateListingDescriptionFlow = ai.defineFlow(
