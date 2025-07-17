@@ -83,6 +83,34 @@ export default function AnimatedHero() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+         <div className="relative z-10 container mx-auto px-4 flex flex-col items-center">
+             <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={textContainerVariants}
+                className="text-center"
+              >
+                <motion.h1
+                    variants={textVariants}
+                    className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight text-shadow-lg"
+                    style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
+                >
+                    {t('heroTitle')}
+                </motion.h1>
+                <motion.p
+                    variants={textVariants}
+                    className="mt-4 text-lg md:text-xl max-w-2xl mx-auto"
+                    style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}
+                >
+                    {t('heroSubtitle')}
+                </motion.p>
+                <motion.div variants={textVariants} className="mt-8">
+                    <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                    <Link href="/gallery">{t('exploreProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                    </Button>
+                </motion.div>
+             </motion.div>
+        </div>
       </>
     );
   }
@@ -143,13 +171,18 @@ export default function AnimatedHero() {
               >
                 {currentMessage.subtitle}
               </motion.p>
-              <motion.div variants={textVariants} className="mt-8">
-                <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                  <Link href="/gallery">{t('exploreProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
-                </Button>
-              </motion.div>
             </motion.div>
           </AnimatePresence>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="mt-8"
+          >
+            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+              <Link href="/gallery">{t('exploreProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
+            </Button>
+          </motion.div>
        </div>
     </>
   );
