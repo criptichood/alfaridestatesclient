@@ -5,10 +5,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import type { ImageDoc } from '@/lib/firestore';
-
-interface AnimatedHeroProps {
-  images: ImageDoc[];
-}
+import { getImages } from '@/lib/firestore';
 
 const variants = {
   enter: {
@@ -22,8 +19,18 @@ const variants = {
   },
 };
 
-export default function AnimatedHero({ images }: AnimatedHeroProps) {
+export default function AnimatedHero() {
+  const [images, setImages] = useState<ImageDoc[]>([]);
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    async function fetchHeroImages() {
+      // Fetch only the latest 4 images for the hero section
+      const { images: fetchedImages } = await getImages(undefined, 4);
+      setImages(fetchedImages);
+    }
+    fetchHeroImages();
+  }, []);
 
   useEffect(() => {
     if (images.length > 1) {
@@ -61,20 +68,20 @@ export default function AnimatedHero({ images }: AnimatedHeroProps) {
         className="absolute inset-0"
       >
         <motion.div
-          key={index}
-          initial={{ scale: 1, x:0, y:0 }}
-          animate={{ scale: [1.05, 1.1], x: [0, -20], y: [0, 10] }}
+          key={images[index].id}
+          initial={{ scale: 1.05 }}
+          animate={{ scale: 1.15 }}
           transition={{ duration: 7, ease: "easeInOut", yoyo: Infinity }}
           className="w-full h-full"
         >
-        <Image
-          src={images[index].url}
-          alt={images[index].title || 'Luxury modern home'}
-          data-ai-hint="luxury modern home"
-          fill
-          className="object-cover"
-          priority={index === 0}
-        />
+          <Image
+            src={images[index].url}
+            alt={images[index].title || 'Luxury modern home'}
+            data-ai-hint="luxury modern home"
+            fill
+            className="object-cover"
+            priority={index === 0}
+          />
         </motion.div>
       </motion.div>
     </AnimatePresence>

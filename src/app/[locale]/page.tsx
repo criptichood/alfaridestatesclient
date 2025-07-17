@@ -8,6 +8,7 @@ import {useTranslations} from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
+import AnimatedHero from '@/components/animated-hero';
 
 
 export default function Home() {
@@ -16,14 +17,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
-        <Image
-            src="https://placehold.co/1920x1080.png"
-            alt="Luxury modern home"
-            data-ai-hint="luxury modern home"
-            fill
-            className="object-cover"
-            priority
-        />
+        <AnimatedHero />
         <div className="absolute inset-0 bg-primary/60" />
         <div className="relative z-10 container mx-auto px-4">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight">
@@ -102,7 +96,7 @@ export default function Home() {
           <p className="mt-4 mb-12 text-lg text-center max-w-3xl mx-auto text-foreground/80">
             {t('featuredPropertiesSubtitle')}
           </p>
-          <GalleryClientPage />
+          <GalleryClientPage isPage={false} />
           <div className="text-center mt-12">
             <Button asChild variant="outline">
               <Link href="/gallery">{t('viewFullGallery')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -117,7 +111,7 @@ export default function Home() {
           <p className="mt-4 mb-12 text-lg text-center max-w-3xl mx-auto text-foreground/80">
             {t('propertyToursSubtitle')}
           </p>
-          <VideosClientPage />
+          <VideosClientPage isPage={false} />
            <div className="text-center mt-12">
             <Button asChild variant="outline">
               <Link href="/videos">{t('watchMoreVideos')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
