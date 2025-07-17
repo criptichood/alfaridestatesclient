@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -34,18 +35,7 @@ export default function GalleryClientPage({ initialImagesCount }: GalleryClientP
     async function fetchImages() {
       setLoading(true);
       const fetchedImages = await getImages(initialImagesCount);
-      // For demo purposes, using placeholders if firestore is empty
-      if (fetchedImages.length === 0) {
-        const placeholderCount = initialImagesCount || 8;
-        const placeholders = Array.from({ length: placeholderCount }, (_, i) => ({
-          id: `placeholder-${i}`,
-          url: `https://placehold.co/800x600.png`,
-          title: t('propertyTitle', {number: i + 1}),
-        }));
-        setImages(placeholders);
-      } else {
-        setImages(fetchedImages);
-      }
+      setImages(fetchedImages);
       setLoading(false);
     }
     fetchImages();

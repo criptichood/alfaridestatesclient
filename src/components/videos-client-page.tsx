@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -32,18 +33,7 @@ export default function VideosClientPage({ initialVideosCount }: VideosClientPag
     async function fetchVideos() {
       setLoading(true);
       const fetchedVideos = await getVideos(initialVideosCount);
-      // For demo purposes, using placeholders if firestore is empty
-      if (fetchedVideos.length === 0) {
-        const placeholderCount = initialVideosCount || 4;
-        const placeholders = Array.from({ length: placeholderCount }, (_, i) => ({
-          id: `placeholder-${i}`,
-          youtubeId: '_F-y9mWhmis', // A sample luxury house tour video
-          title: t('videoTitle', {number: i + 1}),
-        }));
-        setVideos(placeholders);
-      } else {
-        setVideos(fetchedVideos);
-      }
+      setVideos(fetchedVideos);
       setLoading(false);
     }
     fetchVideos();
