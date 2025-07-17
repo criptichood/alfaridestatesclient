@@ -1,11 +1,13 @@
+
 // src/lib/firestore.ts
-import { collection, getDocs, limit, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, limit, query, orderBy, startAfter, DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
 
 export interface ImageDoc {
   id: string;
   url: string;
   title?: string;
+  createdAt?: any;
 }
 
 export interface VideoDoc {
@@ -14,24 +16,48 @@ export interface VideoDoc {
   title?: string;
 }
 
-export async function getImages(count?: number): Promise<ImageDoc[]> {
-  if (!db) return [];
+const IMAGES_PER_PAGE = 8;
+
+export async function getImages(
+  startAfterDoc?: QueryDocumentSnapshot<DocumentData>
+): Promise<{ images: ImageDoc[]; lastVisible: QueryDocumentSnapshot<DocumentData> | null }> {
+  if (!db) return { images: [], lastVisible: null };
+
   try {
     const imagesRef = collection(db, "images");
-    // Assuming you might want to order them, e.g., by a 'createdAt' field.
-    // If not, you can remove the orderBy call.
-    const q = count ? query(imagesRef, limit(count)) : query(imagesRef);
+    
+    // Order by a consistent field, 'createdAt' is ideal. Use descending to get newest first.
+    let q = query(
+      imagesRef, 
+      orderBy("createdAt", "desc"), 
+      limit(IMAGES_PER_PAGE)
+    );
+
+    if (startAfterDoc) {
+      q = query(
+        imagesRef,
+        orderBy("createdAt", "desc"),
+        startAfter(startAfterDoc),
+        limit(IMAGES_PER_PAGE)
+      );
+    }
+    
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({
+    
+    const images = querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
     } as ImageDoc));
+
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+
+    return { images, lastVisible };
   } catch (error) {
     console.error("Error fetching images: ", error);
-    // In a real app, you might want to handle this more gracefully
-    return [];
+    return { images: [], lastVisible: null };
   }
 }
+
 
 export async function getVideos(count?: number): Promise<VideoDoc[]> {
   if (!db) return [];
@@ -43,7 +69,8 @@ export async function getVideos(count?: number): Promise<VideoDoc[]> {
       id: doc.id,
       ...doc.data(),
     } as VideoDoc));
-  } catch (error) {
+  } catch (error)
+ {
     console.error("Error fetching videos: ", error);
     return [];
   }

@@ -99,7 +99,7 @@ export default function Home() {
           <p className="mt-4 mb-12 text-lg text-center max-w-3xl mx-auto text-foreground/80">
             {t('featuredPropertiesSubtitle')}
           </p>
-          <GalleryClientPage initialImagesCount={4} />
+          <GalleryClientPage />
           <div className="text-center mt-12">
             <Button asChild variant="outline">
               <Link href="/gallery">{t('viewFullGallery')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
