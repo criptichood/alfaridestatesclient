@@ -28,12 +28,12 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
 
   const fetchInitialImages = useCallback(async () => {
     setLoading(true);
-    const { images: fetchedImages, lastVisible: newLastVisible } = await getImages();
+    const { images: fetchedImages, lastVisible: newLastVisible } = await getImages(undefined, isPage ? IMAGES_PER_PAGE : 4);
     setImages(fetchedImages);
     setLastVisible(newLastVisible);
-    setHasMore(fetchedImages.length === IMAGES_PER_PAGE);
+    setHasMore(fetchedImages.length === (isPage ? IMAGES_PER_PAGE : 4));
     setLoading(false);
-  }, []);
+  }, [isPage]);
 
   useEffect(() => {
     fetchInitialImages();
@@ -54,15 +54,16 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
     if (selectedImageIndex === null) return;
     const nextIndex = selectedImageIndex + 1;
     
-    // If we are at the second to last image and there are more to load, load them.
-    if (nextIndex >= images.length - 2 && hasMore) {
+    if (nextIndex >= images.length - 2 && hasMore && isPage) {
       handleLoadMore();
     }
     
     if (nextIndex < images.length) {
       setSelectedImageIndex(nextIndex);
+    } else if (isPage && !hasMore) {
+      setSelectedImageIndex(0); // Loop back to start if on the main page and no more images
     }
-  }, [selectedImageIndex, images.length, hasMore, handleLoadMore]);
+  }, [selectedImageIndex, images.length, hasMore, isPage, handleLoadMore]);
 
   const handlePrev = useCallback(() => {
     if (selectedImageIndex === null) return;
@@ -94,14 +95,17 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
     visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } },
   };
 
+  const imagesToDisplay = isPage ? images : images.slice(0, 4);
+  const gridCols = isPage ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+
   const galleryGrid = (
     <motion.div
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+      className={`grid ${gridCols} gap-8`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      {images.map((image, index) => (
+      {imagesToDisplay.map((image, index) => (
         <motion.div
           key={image.id}
           variants={itemVariants}
@@ -113,7 +117,7 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
               <div className="relative aspect-w-4 aspect-h-3 h-64">
                 <Image
                   src={image.url}
-                  alt={image.title || t('loadingText')}
+                  alt={t('loadingText')}
                   data-ai-hint="luxury property interior"
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -139,8 +143,8 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
         )}
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {Array.from({ length: 8 }).map((_, index) => (
+        <div className={`grid ${gridCols} gap-8`}>
+          {Array.from({ length: isPage ? 8 : 4 }).map((_, index) => (
             <div key={index} className="space-y-2">
               <Skeleton className="h-64 w-full rounded-lg" />
             </div>
@@ -149,7 +153,7 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
       ) : (
         <>
           {galleryGrid}
-          {hasMore && (
+          {isPage && hasMore && (
             <div className="text-center mt-12">
               <Button onClick={handleLoadMore} disabled={loadingMore} size="lg">
                 {loadingMore ? (
@@ -175,16 +179,10 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
                 initial={{ opacity: 0.5, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.2 }}
-                className="relative w-full h-full"
+                className="relative w-full h-[80vh]"
               >
-                <Image src={selectedImage.url} alt={selectedImage.title || t('loadingText')} fill className="object-contain" />
+                <Image src={selectedImage.url} alt={t('loadingText')} fill className="object-contain" />
               </motion.div>
-
-              {selectedImage.title && (
-                <div className="p-4 bg-black/50 backdrop-blur-sm absolute bottom-0 w-full text-center">
-                  <h3 className="font-semibold text-lg text-white">{selectedImage.title}</h3>
-                </div>
-              )}
               
               <Button variant="ghost" size="icon" className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full h-12 w-12 bg-black/30 hover:bg-black/50 text-white hover:text-white" onClick={handlePrev}>
                 <ChevronLeft className="h-8 w-8" />
@@ -198,49 +196,6 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
       </Dialog>
     </div>
   );
-
-  // The main page uses this directly, but the homepage preview needs the wrapper.
-  if (!isPage) {
-     return (
-        <div className="container mx-auto px-4">
-             {loading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {Array.from({ length: 4 }).map((_, index) => (
-                    <div key={index} className="space-y-2">
-                        <Skeleton className="h-64 w-full rounded-lg" />
-                    </div>
-                    ))}
-                </div>
-             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                 {images.slice(0, 4).map((image, index) => (
-                    <motion.div
-                    key={image.id}
-                    variants={itemVariants}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className="cursor-pointer"
-                    >
-                    <Card className="overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                        <CardContent className="p-0">
-                        <div className="relative aspect-w-4 aspect-h-3 h-64">
-                            <Image
-                            src={image.url}
-                            alt={image.title || t('loadingText')}
-                            data-ai-hint="luxury property interior"
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            />
-                        </div>
-                        </CardContent>
-                    </Card>
-                    </motion.div>
-                ))}
-                </div>
-            )}
-        </div>
-     )
-  }
 
   return <PageContent />;
 }
