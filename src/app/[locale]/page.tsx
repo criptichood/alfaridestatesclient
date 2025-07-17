@@ -18,14 +18,7 @@ export default function Home() {
     <div className="flex flex-col">
       <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
         <AnimatedHero />
-        <div className="absolute inset-0 bg-primary/60" />
         <div className="relative z-10 container mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight">
-            {t('heroTitle')}
-          </h1>
-          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
-            {t('heroSubtitle')}
-          </p>
           <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
             <Link href="/gallery">{t('exploreProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
           </Button>

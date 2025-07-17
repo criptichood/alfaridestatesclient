@@ -1,4 +1,3 @@
-// src/components/animated-hero.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,26 +5,52 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import type { ImageDoc } from '@/lib/firestore';
 import { getImages } from '@/lib/firestore';
+import { useTranslations } from 'next-intl';
 
-const variants = {
-  enter: {
-    opacity: 0,
-  },
-  center: {
+const imageVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+const textContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: (i = 1) => ({
     opacity: 1,
-  },
-  exit: {
+    transition: { staggerChildren: 0.1, delayChildren: i * 0.3 },
+  }),
+};
+
+const textVariants = {
+  hidden: {
     opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      damping: 12,
+      stiffness: 100,
+    },
   },
 };
 
 export default function AnimatedHero() {
+  const t = useTranslations('HomePage');
   const [images, setImages] = useState<ImageDoc[]>([]);
   const [index, setIndex] = useState(0);
 
+  const heroMessages = [
+    { title: t('heroTitle'), subtitle: t('heroSubtitle') },
+    { title: "Find Your Legacy", subtitle: "Extraordinary homes for discerning clients." },
+    { title: "The Art of Living", subtitle: "Where luxury meets lifestyle." },
+    { title: "Your New Chapter Awaits", subtitle: "Begin your journey with Alfarid Estates." },
+  ];
+
   useEffect(() => {
     async function fetchHeroImages() {
-      // Fetch only the latest 4 images for the hero section
       const { images: fetchedImages } = await getImages(undefined, 4);
       setImages(fetchedImages);
     }
@@ -33,57 +58,91 @@ export default function AnimatedHero() {
   }, []);
 
   useEffect(() => {
+    const cycleDuration = 7000; // 7 seconds for each slide
     if (images.length > 1) {
       const timer = setTimeout(() => {
         setIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 5000); // Change image every 5 seconds
+      }, cycleDuration);
       return () => clearTimeout(timer);
     }
   }, [index, images.length]);
 
   if (!images || images.length === 0) {
     return (
-      <Image
-        src="https://placehold.co/1920x1080.png"
-        alt="Luxury modern home placeholder"
-        data-ai-hint="luxury modern home"
-        fill
-        className="object-cover"
-        priority
-      />
+      <>
+        <div className="absolute inset-0 bg-black/30" />
+        <Image
+          src="https://placehold.co/1920x1080.png"
+          alt="Luxury modern home placeholder"
+          data-ai-hint="luxury modern home"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+      </>
     );
   }
 
+  const currentMessage = heroMessages[index % heroMessages.length];
+
   return (
-    <AnimatePresence initial={false}>
-      <motion.div
-        key={index}
-        variants={variants}
-        initial="enter"
-        animate="center"
-        exit="exit"
-        transition={{
-          opacity: { duration: 1.5 },
-        }}
-        className="absolute inset-0"
-      >
+    <>
+      <AnimatePresence initial={false}>
         <motion.div
-          key={images[index].id}
-          initial={{ scale: 1.05 }}
-          animate={{ scale: 1.15 }}
-          transition={{ duration: 7, ease: "easeInOut", yoyo: Infinity }}
-          className="w-full h-full"
+          key={index}
+          variants={imageVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ opacity: { duration: 1.5 } }}
+          className="absolute inset-0"
         >
-          <Image
-            src={images[index].url}
-            alt={images[index].title || 'Luxury modern home'}
-            data-ai-hint="luxury modern home"
-            fill
-            className="object-cover"
-            priority={index === 0}
-          />
+          <motion.div
+            key={images[index].id}
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.1, transition: { duration: 9, ease: 'linear' } }}
+            className="w-full h-full"
+          >
+            <Image
+              src={images[index].url}
+              alt={images[index].title || 'Luxury modern home'}
+              data-ai-hint="luxury modern home"
+              fill
+              className="object-cover"
+              priority={index === 0}
+            />
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </AnimatePresence>
+      </AnimatePresence>
+       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center">
+        <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              variants={textContainerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="text-center"
+            >
+              <motion.h1
+                variants={textVariants}
+                className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight text-shadow-lg"
+                style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
+              >
+                {currentMessage.title}
+              </motion.h1>
+              <motion.p
+                variants={textVariants}
+                className="mt-4 text-lg md:text-xl max-w-2xl mx-auto"
+                style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}
+              >
+                {currentMessage.subtitle}
+              </motion.p>
+            </motion.div>
+          </AnimatePresence>
+       </div>
+    </>
   );
 }
