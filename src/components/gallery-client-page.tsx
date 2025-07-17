@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { getImages, type ImageDoc } from '@/lib/firestore';
+import { getImages, type ImageDoc, IMAGES_PER_PAGE } from '@/lib/firestore';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
@@ -31,7 +31,7 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
     const { images: fetchedImages, lastVisible: newLastVisible } = await getImages();
     setImages(fetchedImages);
     setLastVisible(newLastVisible);
-    setHasMore(fetchedImages.length > 0 && newLastVisible !== null);
+    setHasMore(fetchedImages.length === IMAGES_PER_PAGE);
     setLoading(false);
   }, []);
 
@@ -46,22 +46,23 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
     const { images: newImages, lastVisible: newLastVisible } = await getImages(lastVisible);
     setImages((prevImages) => [...prevImages, ...newImages]);
     setLastVisible(newLastVisible);
-    setHasMore(newImages.length > 0 && newLastVisible !== null);
+    setHasMore(newImages.length === IMAGES_PER_PAGE);
     setLoadingMore(false);
   };
 
   const handleNext = useCallback(() => {
     if (selectedImageIndex === null) return;
-    setSelectedImageIndex((prevIndex) => {
-      if (prevIndex === null) return 0;
-      const nextIndex = prevIndex + 1;
-      // If we are at the last image and there are more to load, load them.
-      if (nextIndex === images.length - 1 && hasMore) {
-        handleLoadMore();
-      }
-      return nextIndex >= images.length ? 0 : nextIndex;
-    });
-  }, [selectedImageIndex, images.length, hasMore]);
+    const nextIndex = selectedImageIndex + 1;
+    
+    // If we are at the second to last image and there are more to load, load them.
+    if (nextIndex >= images.length - 2 && hasMore) {
+      handleLoadMore();
+    }
+    
+    if (nextIndex < images.length) {
+      setSelectedImageIndex(nextIndex);
+    }
+  }, [selectedImageIndex, images.length, hasMore, handleLoadMore]);
 
   const handlePrev = useCallback(() => {
     if (selectedImageIndex === null) return;

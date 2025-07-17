@@ -1,4 +1,3 @@
-
 // src/lib/firestore.ts
 import { collection, getDocs, limit, query, orderBy, startAfter, DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
@@ -16,7 +15,7 @@ export interface VideoDoc {
   title?: string;
 }
 
-const IMAGES_PER_PAGE = 8;
+export const IMAGES_PER_PAGE = 8;
 
 export async function getImages(
   startAfterDoc?: QueryDocumentSnapshot<DocumentData>
