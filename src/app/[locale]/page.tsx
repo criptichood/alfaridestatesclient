@@ -18,11 +18,6 @@ export default function Home() {
     <div className="flex flex-col">
       <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
         <AnimatedHero />
-        <div className="relative z-10 container mx-auto px-4">
-          <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="/gallery">{t('exploreProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
-          </Button>
-        </div>
       </section>
 
       <section id="about" className="py-16 md:py-24 bg-background">

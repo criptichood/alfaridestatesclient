@@ -6,6 +6,9 @@ import Image from 'next/image';
 import type { ImageDoc } from '@/lib/firestore';
 import { getImages } from '@/lib/firestore';
 import { useTranslations } from 'next-intl';
+import { Button } from './ui/button';
+import { Link } from '@/navigation';
+import { ArrowRight } from 'lucide-react';
 
 const imageVariants = {
   enter: { opacity: 0 },
@@ -17,7 +20,7 @@ const textContainerVariants = {
   hidden: { opacity: 0 },
   visible: (i = 1) => ({
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: i * 0.3 },
+    transition: { staggerChildren: 0.2, delayChildren: i * 0.3 },
   }),
 };
 
@@ -140,6 +143,11 @@ export default function AnimatedHero() {
               >
                 {currentMessage.subtitle}
               </motion.p>
+              <motion.div variants={textVariants} className="mt-8">
+                <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                  <Link href="/gallery">{t('exploreProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                </Button>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
        </div>
