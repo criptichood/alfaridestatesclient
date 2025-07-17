@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 interface GalleryClientPageProps {
   initialImagesCount?: number;
@@ -18,6 +19,7 @@ export default function GalleryClientPage({ initialImagesCount, isPage = false }
   const t = useTranslations('GalleryPage');
   const [images, setImages] = useState<ImageDoc[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<ImageDoc | null>(null);
 
   useEffect(() => {
     async function fetchImages() {
@@ -62,36 +64,65 @@ export default function GalleryClientPage({ initialImagesCount, isPage = false }
         ))}
       </div>
     ) : (
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {images.map((image) => (
-          <motion.div key={image.id} variants={itemVariants}>
-            <Card className="overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <CardContent className="p-0">
-                <div className="relative aspect-w-4 aspect-h-3 w-full h-64">
-                  <Image
-                    src={image.url}
-                    alt={image.title || t('loadingText')}
-                    data-ai-hint="luxury property interior"
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      <>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {images.map((image) => (
+            <motion.div
+              key={image.id}
+              variants={itemVariants}
+              onClick={() => setSelectedImage(image)}
+              className="cursor-pointer"
+            >
+              <Card className="overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <CardContent className="p-0">
+                  <div className="relative aspect-w-4 aspect-h-3 w-full h-64">
+                    <Image
+                      src={image.url}
+                      alt={image.title || t('loadingText')}
+                      data-ai-hint="luxury property interior"
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
+                  {image.title && (
+                    <div className="p-4 bg-background">
+                      <h3 className="font-semibold text-lg truncate">{image.title}</h3>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+        
+        <Dialog open={!!selectedImage} onOpenChange={(isOpen) => !isOpen && setSelectedImage(null)}>
+          <DialogContent className="max-w-4xl p-0 border-0">
+            {selectedImage && (
+              <>
+                <div className="relative aspect-video w-full">
+                  <Image 
+                    src={selectedImage.url} 
+                    alt={selectedImage.title || t('loadingText')} 
+                    fill 
+                    className="object-contain"
                   />
                 </div>
-                {image.title && (
-                  <div className="p-4 bg-background">
-                    <h3 className="font-semibold text-lg truncate">{image.title}</h3>
+                {selectedImage.title && (
+                  <div className="p-4 bg-background/80 backdrop-blur-sm absolute bottom-0 w-full">
+                    <h3 className="font-semibold text-lg text-white">{selectedImage.title}</h3>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </motion.div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      </>
     )
   );
 
