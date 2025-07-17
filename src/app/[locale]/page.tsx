@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import Image from 'next/image';
 import { Link } from '@/navigation';
 import { ArrowRight, Building2, Handshake, Search, Phone, Mail, MapPin } from 'lucide-react';
 import GalleryClientPage from '@/components/gallery-client-page';
@@ -8,20 +7,22 @@ import VideosClientPage from '@/components/videos-client-page';
 import {useTranslations} from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import Image from 'next/image';
+
 
 export default function Home() {
   const t = useTranslations('HomePage');
 
   return (
     <div className="flex flex-col">
-      <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white">
+      <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
         <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Luxury modern home"
-          data-ai-hint="luxury modern home"
-          fill
-          className="object-cover"
-          priority
+            src="https://placehold.co/1920x1080.png"
+            alt="Luxury modern home"
+            data-ai-hint="luxury modern home"
+            fill
+            className="object-cover"
+            priority
         />
         <div className="absolute inset-0 bg-primary/60" />
         <div className="relative z-10 container mx-auto px-4">

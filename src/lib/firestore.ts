@@ -20,26 +20,28 @@ export const IMAGES_PER_PAGE = 8;
 export const VIDEOS_PER_PAGE = 6;
 
 export async function getImages(
-  startAfterDoc?: QueryDocumentSnapshot<DocumentData>
+  startAfterDoc?: QueryDocumentSnapshot<DocumentData>,
+  customLimit: number = IMAGES_PER_PAGE
 ): Promise<{ images: ImageDoc[]; lastVisible: QueryDocumentSnapshot<DocumentData> | null }> {
   if (!db) return { images: [], lastVisible: null };
 
   try {
     const imagesRef = collection(db, "images");
     
-    // Order by a consistent field, 'createdAt' is ideal. Use descending to get newest first.
-    let q = query(
-      imagesRef, 
-      orderBy("createdAt", "desc"), 
-      limit(IMAGES_PER_PAGE)
-    );
+    let q;
 
     if (startAfterDoc) {
       q = query(
         imagesRef,
         orderBy("createdAt", "desc"),
         startAfter(startAfterDoc),
-        limit(IMAGES_PER_PAGE)
+        limit(customLimit)
+      );
+    } else {
+      q = query(
+        imagesRef, 
+        orderBy("createdAt", "desc"), 
+        limit(customLimit)
       );
     }
     
@@ -66,17 +68,18 @@ export async function getVideos(
   if (!db) return { videos: [], lastVisible: null };
   try {
     const videosRef = collection(db, "videos");
-    let q = query(
-      videosRef, 
-      orderBy("createdAt", "desc"), 
-      limit(VIDEOS_PER_PAGE)
-    );
-    
+    let q;
     if (startAfterDoc) {
       q = query(
         videosRef,
         orderBy("createdAt", "desc"),
         startAfter(startAfterDoc),
+        limit(VIDEOS_PER_PAGE)
+      );
+    } else {
+       q = query(
+        videosRef, 
+        orderBy("createdAt", "desc"), 
         limit(VIDEOS_PER_PAGE)
       );
     }
