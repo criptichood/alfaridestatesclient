@@ -32,7 +32,16 @@
     "viewFullGallery": "View Full Gallery",
     "propertyToursTitle": "Property Tours",
     "propertyToursSubtitle": "Immerse yourself in our properties with stunning high-definition video tours.",
-    "watchMoreVideos": "Watch More Videos"
+    "watchMoreVideos": "Watch More Videos",
+    "contactTitle": "Get In Touch",
+    "contactSubtitle": "Have a question or ready to start your real estate journey? Contact us today. Our team is here to help.",
+    "contactAddress": "123 Luxury Lane, Beverly Hills, CA 90210",
+    "contactPhone": "+1 (234) 567-890",
+    "contactEmail": "contact@alfaridestates.com",
+    "formName": "Your Name",
+    "formEmail": "Your Email",
+    "formMessage": "Your Message",
+    "formSend": "Send Message"
   },
   "GalleryPage": {
     "title": "Property Gallery",

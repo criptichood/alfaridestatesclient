@@ -2,10 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import { Link } from '@/navigation';
-import { ArrowRight, Building2, Handshake, Search } from 'lucide-react';
+import { ArrowRight, Building2, Handshake, Search, Phone, Mail, MapPin } from 'lucide-react';
 import GalleryClientPage from '@/components/gallery-client-page';
 import VideosClientPage from '@/components/videos-client-page';
 import {useTranslations} from 'next-intl';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Home() {
   const t = useTranslations('HomePage');
@@ -119,6 +121,58 @@ export default function Home() {
             <Button asChild variant="outline">
               <Link href="/videos">{t('watchMoreVideos')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary">{t('contactTitle')}</h2>
+            <p className="mt-4 text-lg max-w-3xl mx-auto text-foreground/80">
+              {t('contactSubtitle')}
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12">
+            <Card className="p-8 shadow-lg">
+              <form className="space-y-6">
+                <Input placeholder={t('formName')} />
+                <Input type="email" placeholder={t('formEmail')} />
+                <Textarea placeholder={t('formMessage')} rows={5} />
+                <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+                  {t('formSend')}
+                </Button>
+              </form>
+            </Card>
+            <div className="space-y-8">
+               <div className="flex items-start gap-4">
+                  <div className="bg-accent/10 p-3 rounded-full">
+                     <MapPin className="h-6 w-6 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-primary">Address</h3>
+                    <p className="text-foreground/80">{t('contactAddress')}</p>
+                  </div>
+               </div>
+               <div className="flex items-start gap-4">
+                  <div className="bg-accent/10 p-3 rounded-full">
+                    <Phone className="h-6 w-6 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-primary">Phone</h3>
+                    <p className="text-foreground/80">{t('contactPhone')}</p>
+                  </div>
+               </div>
+               <div className="flex items-start gap-4">
+                  <div className="bg-accent/10 p-3 rounded-full">
+                    <Mail className="h-6 w-6 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-primary">Email</h3>
+                    <p className="text-foreground/80">{t('contactEmail')}</p>
+                  </div>
+               </div>
+            </div>
           </div>
         </div>
       </section>

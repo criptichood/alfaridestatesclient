@@ -32,7 +32,16 @@
     "viewFullGallery": "查看完整画廊",
     "propertyToursTitle": "房产参观",
     "propertyToursSubtitle": "通过令人惊叹的高清视频导览，沉浸在我们的房产中。",
-    "watchMoreVideos": "观看更多视频"
+    "watchMoreVideos": "观看更多视频",
+    "contactTitle": "联系我们",
+    "contactSubtitle": "有任何问题或准备开始您的房地产之旅？今天就联系我们。我们的团队随时为您提供帮助。",
+    "contactAddress": "123 Luxury Lane, Beverly Hills, CA 90210",
+    "contactPhone": "+1 (234) 567-890",
+    "contactEmail": "contact@alfaridestates.com",
+    "formName": "您的姓名",
+    "formEmail": "您的电子邮件",
+    "formMessage": "您的留言",
+    "formSend": "发送消息"
   },
   "GalleryPage": {
     "title": "房产画廊",
