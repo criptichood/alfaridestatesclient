@@ -114,7 +114,7 @@ export default function Home() {
           <p className="mt-4 mb-12 text-lg text-center max-w-3xl mx-auto text-foreground/80">
             {t('propertyToursSubtitle')}
           </p>
-          <VideosClientPage initialVideosCount={1} />
+          <VideosClientPage />
            <div className="text-center mt-12">
             <Button asChild variant="outline">
               <Link href="/videos">{t('watchMoreVideos')} <ArrowRight className="ml-2 h-4 w-4" /></Link>

@@ -13,9 +13,11 @@ export interface VideoDoc {
   id:string;
   youtubeId: string;
   title?: string;
+  createdAt?: any;
 }
 
 export const IMAGES_PER_PAGE = 8;
+export const VIDEOS_PER_PAGE = 6;
 
 export async function getImages(
   startAfterDoc?: QueryDocumentSnapshot<DocumentData>
@@ -58,19 +60,39 @@ export async function getImages(
 }
 
 
-export async function getVideos(count?: number): Promise<VideoDoc[]> {
-  if (!db) return [];
+export async function getVideos(
+  startAfterDoc?: QueryDocumentSnapshot<DocumentData>
+): Promise<{ videos: VideoDoc[]; lastVisible: QueryDocumentSnapshot<DocumentData> | null }> {
+  if (!db) return { videos: [], lastVisible: null };
   try {
     const videosRef = collection(db, "videos");
-    const q = count ? query(videosRef, limit(count)) : query(videosRef);
+    let q = query(
+      videosRef, 
+      orderBy("createdAt", "desc"), 
+      limit(VIDEOS_PER_PAGE)
+    );
+    
+    if (startAfterDoc) {
+      q = query(
+        videosRef,
+        orderBy("createdAt", "desc"),
+        startAfter(startAfterDoc),
+        limit(VIDEOS_PER_PAGE)
+      );
+    }
+    
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({
+
+    const videos = querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
     } as VideoDoc));
-  } catch (error)
- {
+    
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+
+    return { videos, lastVisible };
+  } catch (error) {
     console.error("Error fetching videos: ", error);
-    return [];
+    return { videos: [], lastVisible: null };
   }
 }

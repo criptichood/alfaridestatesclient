@@ -6,7 +6,7 @@ type Props = {
 };
 
 export async function generateMetadata({params: {locale}}: Props) {
-  const t = await getTranslations('VideosPage');
+  const t = await getTranslations({locale, namespace: 'VideosPage'});
  
   return {
     title: `${t('title')} | Alfarid Estates`,
@@ -16,5 +16,5 @@ export async function generateMetadata({params: {locale}}: Props) {
 
 
 export default function VideosPage() {
-  return <VideosClientPage />;
+  return <VideosClientPage isPage={true} />;
 }
