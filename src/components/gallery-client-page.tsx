@@ -8,28 +8,16 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useMessages } from 'next-intl';
 
 interface GalleryClientPageProps {
   initialImagesCount?: number;
+  isPage?: boolean;
 }
 
-export default function GalleryClientPage({ initialImagesCount }: GalleryClientPageProps) {
+export default function GalleryClientPage({ initialImagesCount, isPage = false }: GalleryClientPageProps) {
   const t = useTranslations('GalleryPage');
   const [images, setImages] = useState<ImageDoc[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // This is a workaround to pass metadata to a client component
-  const messages = useMessages();
-  const pageMessages = messages.GalleryPage as {title: string, subtitle: string};
-
-  useEffect(() => {
-    document.title = `${pageMessages.title} | Alfarid Estates`;
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-    if (descriptionMeta) {
-      descriptionMeta.setAttribute('content', pageMessages.subtitle);
-    }
-  }, [pageMessages]);
 
   useEffect(() => {
     async function fetchImages() {
@@ -39,7 +27,7 @@ export default function GalleryClientPage({ initialImagesCount }: GalleryClientP
       setLoading(false);
     }
     fetchImages();
-  }, [initialImagesCount, t]);
+  }, [initialImagesCount]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -63,57 +51,63 @@ export default function GalleryClientPage({ initialImagesCount }: GalleryClientP
     },
   };
 
-  const PageContent = () => (
-     <div className="container mx-auto px-4 py-16">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-primary">{t('title')}</h1>
-        <p className="mt-4 text-lg max-w-2xl mx-auto text-foreground/80">
-          {t('subtitle')}
-        </p>
+  const galleryGrid = (
+    loading ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {Array.from({ length: initialImagesCount || 8 }).map((_, index) => (
+          <div key={index} className="space-y-2">
+            <Skeleton className="h-64 w-full rounded-lg" />
+            <Skeleton className="h-6 w-3/4" />
+          </div>
+        ))}
       </div>
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {Array.from({ length: initialImagesCount || 8 }).map((_, index) => (
-            <div key={index} className="space-y-2">
-              <Skeleton className="h-64 w-full rounded-lg" />
-              <Skeleton className="h-6 w-3/4" />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {images.map((image) => (
-            <motion.div key={image.id} variants={itemVariants}>
-              <Card className="overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <CardContent className="p-0">
-                  <div className="relative aspect-w-4 aspect-h-3 w-full">
-                    <Image
-                      src={image.url}
-                      alt={image.title || t('loadingText')}
-                      data-ai-hint="luxury property interior"
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+    ) : (
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {images.map((image) => (
+          <motion.div key={image.id} variants={itemVariants}>
+            <Card className="overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <CardContent className="p-0">
+                <div className="relative aspect-w-4 aspect-h-3 w-full h-64">
+                  <Image
+                    src={image.url}
+                    alt={image.title || t('loadingText')}
+                    data-ai-hint="luxury property interior"
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                {image.title && (
+                  <div className="p-4 bg-background">
+                    <h3 className="font-semibold text-lg truncate">{image.title}</h3>
                   </div>
-                  {image.title && (
-                    <div className="p-4 bg-background">
-                      <h3 className="font-semibold text-lg truncate">{image.title}</h3>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-    </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </motion.div>
+    )
   );
 
-  return <PageContent />;
+  if (isPage) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary">{t('title')}</h1>
+          <p className="mt-4 text-lg max-w-2xl mx-auto text-foreground/80">
+            {t('subtitle')}
+          </p>
+        </div>
+        {galleryGrid}
+      </div>
+    );
+  }
+
+  return galleryGrid;
 }

@@ -6,7 +6,7 @@ type Props = {
 };
 
 export async function generateMetadata({params: {locale}}: Props) {
-  const t = await getTranslations('GalleryPage');
+  const t = await getTranslations({locale, namespace: 'GalleryPage'});
  
   return {
     title: `${t('title')} | Alfarid Estates`,
@@ -15,5 +15,5 @@ export async function generateMetadata({params: {locale}}: Props) {
 }
 
 export default function GalleryPage() {
-  return <GalleryClientPage />;
+  return <GalleryClientPage isPage={true} />;
 }
