@@ -120,11 +120,6 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
-              {image.title && (
-                <div className="p-4 bg-background">
-                  <h3 className="font-semibold text-lg truncate">{image.title}</h3>
-                </div>
-              )}
             </CardContent>
           </Card>
         </motion.div>
@@ -148,7 +143,6 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
           {Array.from({ length: 8 }).map((_, index) => (
             <div key={index} className="space-y-2">
               <Skeleton className="h-64 w-full rounded-lg" />
-              <Skeleton className="h-6 w-3/4" />
             </div>
           ))}
         </div>
@@ -214,7 +208,6 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
                     {Array.from({ length: 4 }).map((_, index) => (
                     <div key={index} className="space-y-2">
                         <Skeleton className="h-64 w-full rounded-lg" />
-                        <Skeleton className="h-6 w-3/4" />
                     </div>
                     ))}
                 </div>
@@ -239,11 +232,6 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
                         </div>
-                        {image.title && (
-                            <div className="p-4 bg-background">
-                            <h3 className="font-semibold text-lg truncate">{image.title}</h3>
-                            </div>
-                        )}
                         </CardContent>
                     </Card>
                     </motion.div>

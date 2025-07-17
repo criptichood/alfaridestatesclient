@@ -90,11 +90,6 @@ export default function VideosClientPage({ isPage = false }: VideosClientPagePro
                   className="absolute top-0 left-0 w-full h-full"
                 ></iframe>
               </div>
-              {video.title && (
-                <div className="p-4 bg-background">
-                  <h3 className="font-semibold text-lg truncate">{video.title}</h3>
-                </div>
-              )}
             </CardContent>
           </Card>
         </motion.div>
@@ -119,7 +114,6 @@ export default function VideosClientPage({ isPage = false }: VideosClientPagePro
          {Array.from({ length: isPage ? VIDEOS_PER_PAGE : 1 }).map((_, index) => (
            <div key={index} className="space-y-2">
              <Skeleton className="h-0 pb-[56.25%] w-full rounded-lg" />
-             <Skeleton className="h-6 w-3/4" />
            </div>
          ))}
        </div>
@@ -152,7 +146,6 @@ export default function VideosClientPage({ isPage = false }: VideosClientPagePro
                 <div className="grid grid-cols-1 gap-8">
                     <div className="space-y-2">
                         <Skeleton className="h-0 pb-[56.25%] w-full rounded-lg" />
-                        <Skeleton className="h-6 w-3/4" />
                     </div>
                 </div>
              ) : (
@@ -171,11 +164,6 @@ export default function VideosClientPage({ isPage = false }: VideosClientPagePro
                               className="absolute top-0 left-0 w-full h-full"
                             ></iframe>
                           </div>
-                          {video.title && (
-                            <div className="p-4 bg-background">
-                              <h3 className="font-semibold text-lg truncate">{video.title}</h3>
-                            </div>
-                          )}
                         </CardContent>
                       </Card>
                     </motion.div>
