@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from '@/navigation';
@@ -10,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import AnimatedHero from '@/components/animated-hero';
 import ScrollAnimationWrapper from '@/components/scroll-animation-wrapper';
+import AboutImageCarousel from '@/components/about-image-carousel';
 
 
 export default function Home() {
@@ -34,27 +36,8 @@ export default function Home() {
                   {t('aboutText2')}
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                  <div className="col-span-1 pt-8">
-                     <Image
-                      src="https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841178/apha2_uab1ho.jpg"
-                      alt="Modern building exterior"
-                      data-ai-hint="modern building"
-                      width={400}
-                      height={500}
-                      className="rounded-lg shadow-xl object-cover w-full h-full"
-                    />
-                  </div>
-                   <div className="col-span-1">
-                     <Image
-                      src="https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841180/alpha7_kq1yjy.jpg"
-                      alt="Luxury home interior"
-                      data-ai-hint="luxury interior"
-                      width={400}
-                      height={500}
-                      className="rounded-lg shadow-xl object-cover w-full h-full"
-                    />
-                  </div>
+              <div>
+                <AboutImageCarousel />
               </div>
             </div>
           </div>
