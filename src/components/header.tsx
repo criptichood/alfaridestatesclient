@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
@@ -20,6 +21,12 @@ export function Header() {
   const t = useTranslations('Header');
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
 
   const navItems = [
     { href: '/', label: t('home') },
@@ -34,7 +41,7 @@ export function Header() {
       href={href}
       className={cn(
         "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-        pathname === href ? "text-primary" : "text-foreground/60"
+        isClient && pathname === href ? "text-primary" : "text-foreground/60"
       )}
       onClick={() => setIsMobileMenuOpen(false)}
     >
