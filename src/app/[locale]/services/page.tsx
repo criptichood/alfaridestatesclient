@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
@@ -34,10 +35,17 @@ export default function ServicesPage() {
     <>
       <section className="relative h-[50vh] w-full flex items-center justify-center text-center text-white">
         <ServicesHeroCarousel />
-        <div className="absolute inset-0 bg-primary/70" />
         <div className="relative z-10 container mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-bold font-headline">{t('heroTitle')}</h1>
-          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
+          <h1 
+            className="text-4xl md:text-6xl font-bold font-headline"
+            style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
+          >
+            {t('heroTitle')}
+          </h1>
+          <p 
+            className="mt-4 text-lg md:text-xl max-w-2xl mx-auto"
+            style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}
+          >
             {t('heroSubtitle')}
           </p>
         </div>
