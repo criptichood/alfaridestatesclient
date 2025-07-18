@@ -46,8 +46,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2 text-primary">
-          <div className="bg-white rounded-full flex items-center justify-center h-8 w-8">
-            <Image src="/AlfaridLogo.svg" alt="Alfarid Estates Logo" width={32} height={32} className="h-8 w-8 text-primary" />
+          <div className="bg-white rounded-full flex items-center justify-center h-8 w-8 p-1">
+            <Image src="/AlfaridLogo.svg" alt="Alfarid Estates Logo" width={32} height={32} className="h-full w-full text-primary" />
           </div>
         </Link>
         <nav className="hidden md:flex flex-1 items-center space-x-6">
@@ -67,8 +67,8 @@ export function Header() {
               <SheetContent side="right">
                 <div className="p-4">
                    <Link href="/" className="mr-6 flex items-center space-x-2 mb-8 text-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                     <div className="bg-white rounded-full flex items-center justify-center h-8 w-8">
-                        <Image src="/AlfaridLogo.svg" alt="Alfarid Estates Logo" width={32} height={32} className="h-8 w-8 text-primary" />
+                     <div className="bg-white rounded-full flex items-center justify-center h-8 w-8 p-1">
+                        <Image src="/AlfaridLogo.svg" alt="Alfarid Estates Logo" width={32} height={32} className="h-full w-full text-primary" />
                      </div>
                   </Link>
                   <nav className="flex flex-col space-y-4">
