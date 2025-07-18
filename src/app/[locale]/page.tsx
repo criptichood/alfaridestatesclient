@@ -22,23 +22,41 @@ export default function Home() {
       </section>
 
       <ScrollAnimationWrapper>
-        <section id="about" className="relative py-24 md:py-32 text-white">
-          <Image
-            src="https://placehold.co/1920x800.png"
-            alt="Realtor team working"
-            data-ai-hint="realtor team"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="relative container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold">{t('aboutTitle')}</h2>
-            <p className="mt-4 text-lg max-w-3xl mx-auto text-white/90">
-              {t('aboutText1')}
-            </p>
-            <p className="mt-4 text-lg max-w-3xl mx-auto text-white/90">
-              {t('aboutText2')}
-            </p>
+        <section id="about" className="py-24 md:py-32 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-left">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary">{t('aboutTitle')}</h2>
+                <p className="mt-4 text-lg text-foreground/80">
+                  {t('aboutText1')}
+                </p>
+                <p className="mt-4 text-lg text-foreground/80">
+                  {t('aboutText2')}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-1 pt-8">
+                     <Image
+                      src="https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841178/apha2_uab1ho.jpg"
+                      alt="Modern building exterior"
+                      data-ai-hint="modern building"
+                      width={400}
+                      height={500}
+                      className="rounded-lg shadow-xl object-cover w-full h-full"
+                    />
+                  </div>
+                   <div className="col-span-1">
+                     <Image
+                      src="https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841180/alpha7_kq1yjy.jpg"
+                      alt="Luxury home interior"
+                      data-ai-hint="luxury interior"
+                      width={400}
+                      height={500}
+                      className="rounded-lg shadow-xl object-cover w-full h-full"
+                    />
+                  </div>
+              </div>
+            </div>
           </div>
         </section>
       </ScrollAnimationWrapper>
