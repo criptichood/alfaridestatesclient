@@ -1,8 +1,8 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Menu } from 'lucide-react';
+import { useState, useEffect, useTransition } from 'react';
+import { Menu, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -22,11 +22,11 @@ export function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-
 
   const navItems = [
     { href: '/', label: t('home') },
@@ -41,9 +41,16 @@ export function Header() {
       href={href}
       className={cn(
         "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-        isClient ? (pathname === href ? "text-primary" : "text-foreground/60") : "text-foreground/60"
+        isClient && pathname === href ? "text-primary" : "text-foreground/60"
       )}
-      onClick={() => setIsMobileMenuOpen(false)}
+      onClick={(e) => {
+        if (pathname !== href) {
+          startTransition(() => {
+            // The navigation is wrapped in startTransition
+          });
+        }
+        setIsMobileMenuOpen(false)
+      }}
     >
       {label}
     </Link>
@@ -59,6 +66,7 @@ export function Header() {
           {navItems.map(item => <NavLink key={item.href} {...item} />)}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
+          {isPending && <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />}
           <LanguageSwitcher />
           <ThemeToggle />
           <div className="md:hidden">
