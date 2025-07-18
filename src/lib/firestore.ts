@@ -63,7 +63,8 @@ export async function getImages(
 
 
 export async function getVideos(
-  startAfterDoc?: QueryDocumentSnapshot<DocumentData>
+  startAfterDoc?: QueryDocumentSnapshot<DocumentData>,
+  customLimit: number = VIDEOS_PER_PAGE
 ): Promise<{ videos: VideoDoc[]; lastVisible: QueryDocumentSnapshot<DocumentData> | null }> {
   if (!db) return { videos: [], lastVisible: null };
   try {
@@ -74,13 +75,13 @@ export async function getVideos(
         videosRef,
         orderBy("createdAt", "desc"),
         startAfter(startAfterDoc),
-        limit(VIDEOS_PER_PAGE)
+        limit(customLimit)
       );
     } else {
        q = query(
         videosRef, 
         orderBy("createdAt", "desc"), 
-        limit(VIDEOS_PER_PAGE)
+        limit(customLimit)
       );
     }
     
