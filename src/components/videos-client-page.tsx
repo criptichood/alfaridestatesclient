@@ -11,7 +11,7 @@ import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
 import { Button } from './ui/button';
 import { Loader2, PlayCircle } from 'lucide-react';
 import Image from 'next/image';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 interface VideosClientPageProps {
   isPage?: boolean;
@@ -153,16 +153,19 @@ export default function VideosClientPage({ isPage = false }: VideosClientPagePro
       <Dialog open={selectedVideo !== null} onOpenChange={(isOpen) => !isOpen && setSelectedVideo(null)}>
         <DialogContent className="max-w-4xl w-full p-0 border-0 bg-transparent shadow-none">
           {selectedVideo && (
-            <div className="aspect-video">
-              <iframe
-                src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
-                title={selectedVideo.title || "YouTube video player"}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="w-full h-full rounded-lg"
-              ></iframe>
-            </div>
+            <>
+              <DialogTitle className="sr-only">{selectedVideo.title || "Video Player"}</DialogTitle>
+              <div className="aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
+                  title={selectedVideo.title || "YouTube video player"}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full rounded-lg"
+                ></iframe>
+              </div>
+            </>
           )}
         </DialogContent>
       </Dialog>
