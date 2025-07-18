@@ -22,26 +22,23 @@ export default function Home() {
       </section>
 
       <ScrollAnimationWrapper>
-        <section id="about" className="py-16 md:py-24 animated-gradient">
-          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-primary">{t('aboutTitle')}</h2>
-              <p className="mt-4 text-lg text-foreground/80">
-                {t('aboutText1')}
-              </p>
-              <p className="mt-4 text-lg text-foreground/80">
-                {t('aboutText2')}
-              </p>
-            </div>
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-xl">
-              <Image
-                  src="https://placehold.co/800x600.png"
-                  alt="Realtor team"
-                  data-ai-hint="realtor team"
-                  fill
-                  className="object-cover"
-                />
-            </div>
+        <section id="about" className="relative py-24 md:py-32 text-white">
+          <Image
+            src="https://placehold.co/1920x800.png"
+            alt="Realtor team working"
+            data-ai-hint="realtor team"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold">{t('aboutTitle')}</h2>
+            <p className="mt-4 text-lg max-w-3xl mx-auto text-white/90">
+              {t('aboutText1')}
+            </p>
+            <p className="mt-4 text-lg max-w-3xl mx-auto text-white/90">
+              {t('aboutText2')}
+            </p>
           </div>
         </section>
       </ScrollAnimationWrapper>
