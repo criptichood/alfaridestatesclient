@@ -11,11 +11,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from './theme-toggle';
-import { Link, usePathname } from '@/navigation';
+import { Link, usePathname, pathnames } from '@/navigation';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from './language-switcher';
 import Image from 'next/image';
 
+type NavItem = {
+  href: keyof typeof pathnames;
+  label: string;
+};
 
 export function Header() {
   const t = useTranslations('Header');
@@ -28,7 +32,7 @@ export function Header() {
     setIsClient(true);
   }, []);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { href: '/', label: t('home') },
     { href: '/gallery', label: t('gallery') },
     { href: '/videos', label: t('videos') },
@@ -36,7 +40,7 @@ export function Header() {
     { href: '/listing-generator', label: t('aiTool') },
   ];
 
-  const NavLink = ({ href, label }: { href: string; label: string }) => (
+  const NavLink = ({ href, label }: NavItem) => (
     <Link
       href={href}
       className={cn(
