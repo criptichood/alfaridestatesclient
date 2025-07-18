@@ -14,7 +14,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Alfarid Estates Showcase',
+  title: 'Alfarid Estates',
   description: 'Luxury real estate showcase by Alfarid Estates.',
 };
 
