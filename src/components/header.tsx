@@ -41,7 +41,7 @@ export function Header() {
       href={href}
       className={cn(
         "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-        isClient && pathname === href ? "text-primary" : "text-foreground/60"
+        isClient ? (pathname === href ? "text-primary" : "text-foreground/60") : "text-foreground/60"
       )}
       onClick={() => setIsMobileMenuOpen(false)}
     >
