@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,7 +9,7 @@ import { getImages } from '@/lib/firestore';
 import { useTranslations } from 'next-intl';
 import { Button } from './ui/button';
 import { Link } from '@/navigation';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 
 const imageVariants = {
   enter: { opacity: 0 },
@@ -43,6 +44,7 @@ const textVariants = {
 export default function AnimatedHero() {
   const t = useTranslations('HomePage');
   const [images, setImages] = useState<ImageDoc[]>([]);
+  const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
 
   const heroMessages = [
@@ -54,8 +56,10 @@ export default function AnimatedHero() {
 
   useEffect(() => {
     async function fetchHeroImages() {
+      setLoading(true);
       const { images: fetchedImages } = await getImages(undefined, 4);
       setImages(fetchedImages);
+      setLoading(false);
     }
     fetchHeroImages();
   }, []);
@@ -70,18 +74,10 @@ export default function AnimatedHero() {
     }
   }, [index, images.length]);
 
-  if (!images || images.length === 0) {
+  if (loading || images.length === 0) {
     return (
       <>
-        <div className="absolute inset-0 bg-black/30" />
-        <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Luxury modern home placeholder"
-          data-ai-hint="luxury modern home"
-          fill
-          className="object-cover"
-          priority
-        />
+        <div className="absolute inset-0 bg-primary/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
          <div className="relative z-10 container mx-auto px-4 flex flex-col items-center">
              <motion.div
@@ -92,7 +88,7 @@ export default function AnimatedHero() {
               >
                 <motion.h1
                     variants={textVariants}
-                    className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight text-shadow-lg"
+                    className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight"
                     style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
                 >
                     {t('heroTitle')}
@@ -159,7 +155,7 @@ export default function AnimatedHero() {
             >
               <motion.h1
                 variants={textVariants}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight text-shadow-lg"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline leading-tight tracking-tight"
                 style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
               >
                 {currentMessage.title}
