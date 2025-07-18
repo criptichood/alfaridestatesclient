@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
-import Image from 'next/image';
 import {useTranslations} from 'next-intl';
+import ServicesHeroCarousel from '@/components/services-hero-carousel';
 
 export default function ServicesPage() {
   const t = useTranslations('ServicesPage');
@@ -32,14 +32,8 @@ export default function ServicesPage() {
 
   return (
     <>
-      <section className="relative h-[40vh] w-full flex items-center justify-center text-center text-white">
-        <Image
-          src="https://placehold.co/1920x800.png"
-          alt="Architectural detail"
-          data-ai-hint="architectural detail"
-          fill
-          className="object-cover"
-        />
+      <section className="relative h-[50vh] w-full flex items-center justify-center text-center text-white">
+        <ServicesHeroCarousel />
         <div className="absolute inset-0 bg-primary/70" />
         <div className="relative z-10 container mx-auto px-4">
           <h1 className="text-4xl md:text-6xl font-bold font-headline">{t('heroTitle')}</h1>
