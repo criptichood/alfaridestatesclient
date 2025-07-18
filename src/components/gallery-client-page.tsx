@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
@@ -173,6 +173,9 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
       <Dialog open={selectedImageIndex !== null} onOpenChange={(isOpen) => !isOpen && setSelectedImageIndex(null)}>
         <DialogContent className="max-w-5xl w-full p-0 border-0 bg-transparent shadow-none">
           {selectedImage && (
+            <>
+            <DialogTitle className="sr-only">{selectedImage.title || t('propertyTitle', { number: (selectedImageIndex ?? 0) + 1 })}</DialogTitle>
+            <DialogDescription className="sr-only">{t('loadingText')}</DialogDescription>
             <div className="relative aspect-video w-full flex items-center justify-center">
               <motion.div
                 key={selectedImageIndex}
@@ -191,6 +194,7 @@ export default function GalleryClientPage({ isPage = false }: GalleryClientPageP
                 <ChevronRight className="h-8 w-8" />
               </Button>
             </div>
+            </>
           )}
         </DialogContent>
       </Dialog>
