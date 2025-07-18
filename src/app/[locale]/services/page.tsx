@@ -34,8 +34,11 @@ export default function ServicesPage() {
 
   return (
     <>
-      <section className="relative h-[50vh] w-full flex items-center justify-center text-center text-white">
-        <ServicesHeroCarousel />
+      <section className="relative h-[50vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <ServicesHeroCarousel />
+        </div>
+        <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 container mx-auto px-4">
           <h1 
             className="text-4xl md:text-6xl font-bold font-headline"
