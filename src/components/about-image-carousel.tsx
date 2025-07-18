@@ -16,6 +16,11 @@ const variants = {
   exit: { opacity: 0 },
 };
 
+const zoomVariants = {
+  initial: { scale: 1 },
+  animate: { scale: 1.1, transition: { duration: 7, ease: 'linear' } },
+};
+
 export default function AboutImageCarousel() {
   const [index, setIndex] = useState(0);
 
@@ -27,7 +32,7 @@ export default function AboutImageCarousel() {
   }, [index]);
 
   return (
-    <div className="relative w-full h-96 md:h-full min-h-[400px]">
+    <div className="relative w-full h-96 md:h-full min-h-[400px] overflow-hidden rounded-lg shadow-xl">
       <AnimatePresence initial={false}>
         <motion.div
           key={index}
@@ -38,15 +43,22 @@ export default function AboutImageCarousel() {
           transition={{ opacity: { duration: 1.5 } }}
           className="absolute inset-0"
         >
-          <Image
-            src={images[index]}
-            alt="Showcase of Alfarid Estates properties"
-            fill
-            className="rounded-lg shadow-xl object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority={index === 0}
-            data-ai-hint="luxury estate"
-          />
+            <motion.div
+              className="w-full h-full"
+              variants={zoomVariants}
+              initial="initial"
+              animate="animate"
+            >
+                <Image
+                    src={images[index]}
+                    alt="Showcase of Alfarid Estates properties"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={index === 0}
+                    data-ai-hint="luxury estate"
+                />
+            </motion.div>
         </motion.div>
       </AnimatePresence>
     </div>
