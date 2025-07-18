@@ -7,7 +7,9 @@ import Image from 'next/image';
 
 const images = [
   "https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841180/alpha7_kq1yjy.jpg",
-  "https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841178/apha2_uab1ho.jpg"
+  "https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841178/apha2_uab1ho.jpg",
+  "https://res.cloudinary.com/ddzgkirmz/image/upload/v1752841179/aph5_vsvnsu.jpg",
+  "https://res.cloudinary.com/ddzgkirmz/image/upload/v1752855802/alfarid1_hybxqk.jpg"
 ];
 
 const variants = {
